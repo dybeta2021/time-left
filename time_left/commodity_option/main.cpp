@@ -3,7 +3,8 @@
 //
 
 #include "load_cal_dates.h"
-#include "time_left.h"
+#include "commodity_option.h"
+using namespace commodity_option;
 
 int main() {
     {

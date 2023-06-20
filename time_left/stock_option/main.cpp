@@ -3,7 +3,9 @@
 //
 
 #include "load_cal_dates.h"
-#include "time_left.h"
+#include "stock_option.h"
+
+using namespace stock_option;
 
 int main() {
     std::vector<std::string> file_name{};
@@ -28,8 +30,8 @@ int main() {
     }
 
     {
-        auto time_left = TimeLeft(cal_dates, 244, "09:30:00", "11:30:00", "13:00:00", "15:00:00", "2023-06-20");
-        std::cout << "time_left:" << time_left.GetTimeLeft() << std::endl;
+        std::cout << "time_left:" << TimeLeft(cal_dates, 244, "09:30:00", "11:30:00", "13:00:00", "15:00:00", "2023-06-20").GetTimeLeft() << std::endl;
+        std::cout << "time_left:" << TimeLeft(cal_dates, 244, "09:30:00", "11:30:00", "13:00:00", "15:00:00", "2023-06-21").GetTimeLeft() << std::endl;
     }
 
     return 0;
