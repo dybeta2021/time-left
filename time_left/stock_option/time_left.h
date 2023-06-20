@@ -106,7 +106,7 @@ private:
     std::time_t am_end_{};
     std::time_t pm_start_{};
     std::time_t pm_end_{};
-    int total_time{};
+    int total_time_one_day_{};
 
 public:
     static auto
@@ -143,11 +143,11 @@ public:
 
         auto am_diff = get_time_diff(am_start_, am_end_);
         auto pm_diff = get_time_diff(pm_start_, pm_end_);
-        total_time = static_cast<int>(am_diff + pm_diff);
+        total_time_one_day_ = static_cast<int>(am_diff + pm_diff);
     }
 
-    [[nodiscard]] auto GetTotalTime() const {
-        return total_time;
+    [[nodiscard]] auto GetTotalTimeOneDay() const {
+        return total_time_one_day_;
     }
 
     static std::time_t GetCurrentTime() {
@@ -175,7 +175,7 @@ public:
     [[nodiscard]] auto GetTimeLeft() const {
         std::time_t now_t = GetCurrentTime();
         auto time_left = GetTimeLeft(now_t);
-        return time_left / (double) total_time;
+        return time_left / (double) total_time_one_day_;
     }
 };
 

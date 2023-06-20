@@ -17,7 +17,7 @@ int main() {
         auto day_left = DateLeft(cal_dates);
         auto current_date = DateLeft::GetCurrentDate();
         std::cout << "current_date:" << current_date << std::endl;
-        std::cout << "day_left:" << day_left.GetDayLeft(current_date, "2023-07-01") << std::endl;
+        std::cout << "day_left:" << day_left.GetDayLeft(current_date, "2023-06-20") << std::endl;
     }
 
     {
@@ -28,7 +28,7 @@ int main() {
     }
 
     {
-        auto time_left = TimeLeft(cal_dates, 244, "09:30:00", "11:30:00", "13:00:00", "15:00:00", "2023-07-01");
+        auto time_left = TimeLeft(cal_dates, 244, "09:30:00", "11:30:00", "13:00:00", "15:00:00", "2023-06-20");
         std::cout << "time_left:" << time_left.GetTimeLeft() << std::endl;
     }
 
