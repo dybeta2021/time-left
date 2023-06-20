@@ -34,3 +34,20 @@ time_left = CommodityOptionTimeLeft(
     night_end="23:00:00",
     expiry_date="2023-07-01")
 print(time_left.GetTimeLeft())
+
+
+time_left = CommodityOptionTimeLeft(
+    day_cal_dates=day_cal_dates,
+    night_cal_dates=night_cal_dates,
+    day_num_in_year=244,
+    night_num_in_year=237,
+    am_start="09:00:00",
+    am_end="10:15:00",
+    mid_start="10:30:00",
+    mid_end="11:30:00",
+    pm_start="13:30:00",
+    pm_end="15:00:00",
+    night_start="21:00:00",
+    night_end="23:00:00",
+    expiry_date="2023-06-20")
+print(time_left.GetTimeLeft())

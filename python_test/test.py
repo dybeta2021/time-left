@@ -22,3 +22,13 @@ time_left = StockOptionTimeLeft(cal_dates=cal_dates,
                                 pm_end="15:00:00",
                                 expiry_date="2023-07-01")
 print(time_left.GetTimeLeft())
+
+
+time_left = StockOptionTimeLeft(cal_dates=cal_dates,
+                                date_num_in_year=244,
+                                am_start="09:30:00",
+                                am_end="11:30:00",
+                                pm_start="13:00:00",
+                                pm_end="15:00:00",
+                                expiry_date="2023-06-20")
+print(time_left.GetTimeLeft())
