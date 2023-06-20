@@ -179,7 +179,6 @@ public:
     }
 };
 
-
 class TimeLeft {
 private:
     std::unique_ptr<DatetimeLeft> ptr_datetime_left_;
@@ -187,6 +186,16 @@ private:
     double date_left_{};
     int date_num_in_year_{};
     bool is_holiday_{};
+
+    /// 返回单位年
+    auto get_time_left() {
+        if (is_holiday_) {
+            return date_left_ / date_num_in_year_;
+        }
+
+        auto time_left = ptr_datetime_left_->GetTimeLeft();
+        return (time_left + date_left_) / date_num_in_year_;
+    }
 
 public:
     TimeLeft(const std::vector<std::string> &cal_dates,
@@ -209,17 +218,8 @@ public:
         }
     }
 
-    ~TimeLeft() = default;
-
-public:
-    /// 返回单位年
-    /// \return
     auto GetTimeLeft() {
-        if (is_holiday_) {
-            return date_left_ / date_num_in_year_;
-        }
-
-        auto time_left = ptr_datetime_left_->GetTimeLeft();
-        return (time_left + date_left_) / date_num_in_year_;
+        const auto time_left = get_time_left();
+        return time_left < 1e-6 ? 1e-6 : time_left;
     }
 };

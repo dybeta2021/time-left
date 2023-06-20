@@ -2,3 +2,4 @@
 cmake-build-release
 pytimeleft/.vs
 Release
+cmake-build-debug
