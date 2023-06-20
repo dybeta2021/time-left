@@ -110,7 +110,7 @@ public:
         // 转化为tm结构体
         tm *ltm = localtime(&now);
         // 判断当前时刻是否在00:00:00～06:00:00之间
-        if (ltm->tm_hour < 18) {
+        if (ltm->tm_hour < 6) {
             // 如果是，就把now减去一天的秒数
             now -= 24 * 60 * 60;
             // 再次转化为tm结构体
@@ -139,7 +139,7 @@ private:
     std::time_t mid_end_{};
     std::time_t pm_start_{};
     std::time_t pm_end_{};
-    int total_time{};
+    int total_time_one_day_{};
 
 public:
     static auto time_to_timestamp(const std::string &datetime_str) {
@@ -187,11 +187,11 @@ public:
         auto am_diff = get_time_diff(am_start_, am_end_);
         auto mid_diff = get_time_diff(mid_start_, mid_end_);
         auto pm_diff = get_time_diff(pm_start_, pm_end_);
-        total_time = static_cast<int>(am_diff + mid_diff + pm_diff);
+        total_time_one_day_ = static_cast<int>(am_diff + mid_diff + pm_diff);
     }
 
-    [[nodiscard]] auto GetTotalTime() const {
-        return total_time;
+    [[nodiscard]] auto GetTotalTimeOneDay() const {
+        return total_time_one_day_;
     }
 
     /// 返回秒
@@ -228,7 +228,7 @@ class NightTimeLeft {
 private:
     std::time_t night_start_{};
     std::time_t night_end_{};
-    int total_time{};
+    int total_time_one_day_{};
 
 public:
     static auto time_to_timestamp(const std::string &datetime_str, const std::string &format_str = "%Y-%m-%d %H:%M:%S") {
@@ -259,11 +259,11 @@ public:
         }
 
         auto night_diff = DayTimeLeft::get_time_diff(night_start_, night_end_);
-        total_time = static_cast<int>(night_diff);
+        total_time_one_day_ = static_cast<int>(night_diff);
     }
 
-    [[nodiscard]] auto GetTotalTime() const {
-        return total_time;
+    [[nodiscard]] auto GetTotalTimeOneDay() const {
+        return total_time_one_day_;
     }
 
     /// 返回秒
@@ -349,9 +349,9 @@ public:
                 is_holiday_ = true;
             }
         }
-        left_time_ = ptr_day_date_left_->GetDayLeft(DateLeft::GetDayCurrentDate(), expiry_date) * ptr_day_time_left_->GetTotalTime() +
+        left_time_ = ptr_day_date_left_->GetDayLeft(DateLeft::GetDayCurrentDate(), expiry_date) * ptr_day_time_left_->GetTotalTimeOneDay() +
                      ptr_night_date_left_->GetDayLeft(DateLeft::GetNightCurrentDate(), expiry_date) * ptr_night_time_left_->GetTimeLeft();
-        total_time_ = day_num_in_year * ptr_day_time_left_->GetTotalTime() + night_num_in_year * ptr_night_time_left_->GetTimeLeft();
+        total_time_ = day_num_in_year * ptr_day_time_left_->GetTotalTimeOneDay() + night_num_in_year * ptr_night_time_left_->GetTimeLeft();
     }
 
 public:
