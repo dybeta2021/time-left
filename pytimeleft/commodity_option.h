@@ -113,7 +113,7 @@ namespace commodity_option {
             // 转化为tm结构体
             tm *ltm = localtime(&now);
             // 判断当前时刻是否在00:00:00～06:00:00之间
-            if (ltm->tm_hour < 18) {
+            if (ltm->tm_hour < 6) {
                 // 如果是，就把now减去一天的秒数
                 now -= 24 * 60 * 60;
                 // 再次转化为tm结构体
@@ -334,7 +334,7 @@ namespace commodity_option {
 
             time_t now = time(nullptr);
             tm *ltm = localtime(&now);
-            // 判断当前时刻是否在00:00:00～06:00:00之间
+            // 判断当前时刻是否在06:00:00～18:00:00之间
             if (ltm->tm_hour >= 6 && ltm->tm_hour < 18) {
                 is_day_ = true;
                 auto it = std::find(day_cal_dates.begin(), day_cal_dates.end(), ptr_day_date_left_->GetDayCurrentDate());
