@@ -12,7 +12,6 @@
 #include <vector>
 
 namespace commodity_option {
-
     class DateLeft {
     private:
         std::vector<std::string> cal_dates_{};
@@ -142,7 +141,7 @@ namespace commodity_option {
         std::time_t mid_end_{};
         std::time_t pm_start_{};
         std::time_t pm_end_{};
-        int total_time{};
+        int total_time_one_day_{};
 
     public:
         static auto time_to_timestamp(const std::string &datetime_str) {
@@ -190,11 +189,11 @@ namespace commodity_option {
             auto am_diff = get_time_diff(am_start_, am_end_);
             auto mid_diff = get_time_diff(mid_start_, mid_end_);
             auto pm_diff = get_time_diff(pm_start_, pm_end_);
-            total_time = static_cast<int>(am_diff + mid_diff + pm_diff);
+            total_time_one_day_ = static_cast<int>(am_diff + mid_diff + pm_diff);
         }
 
-        [[nodiscard]] auto GetTotalTime() const {
-            return total_time;
+        [[nodiscard]] auto GetTotalTimeOneDay() const {
+            return total_time_one_day_;
         }
 
         /// 返回秒
@@ -231,7 +230,7 @@ namespace commodity_option {
     private:
         std::time_t night_start_{};
         std::time_t night_end_{};
-        int total_time{};
+        int total_time_one_day_{};
 
     public:
         static auto time_to_timestamp(const std::string &datetime_str, const std::string &format_str = "%Y-%m-%d %H:%M:%S") {
@@ -262,11 +261,11 @@ namespace commodity_option {
             }
 
             auto night_diff = DayTimeLeft::get_time_diff(night_start_, night_end_);
-            total_time = static_cast<int>(night_diff);
+            total_time_one_day_ = static_cast<int>(night_diff);
         }
 
-        [[nodiscard]] auto GetTotalTime() const {
-            return total_time;
+        [[nodiscard]] auto GetTotalTimeOneDay() const {
+            return total_time_one_day_;
         }
 
         /// 返回秒
@@ -295,7 +294,7 @@ namespace commodity_option {
         std::unique_ptr<DayTimeLeft> ptr_day_time_left_;
         std::unique_ptr<NightTimeLeft> ptr_night_time_left_;
         long left_time_{};
-        long total_time_{};
+        long total_time_one_year_{};
         bool is_day_{};
         bool is_holiday_{};
 
@@ -303,13 +302,13 @@ namespace commodity_option {
         /// 返回单位年
         double get_time_left() {
             if (is_holiday_) {
-                return (double) left_time_ / (double) total_time_;
+                return (double) left_time_ / (double) total_time_one_year_;
             }
 
             if (is_day_) {
-                return (ptr_day_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_;
+                return (ptr_day_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_one_year_;
             } else {
-                return (ptr_night_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_;
+                return (ptr_night_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_one_year_;
             }
         }
 
@@ -352,15 +351,19 @@ namespace commodity_option {
                     is_holiday_ = true;
                 }
             }
-            left_time_ = ptr_day_date_left_->GetDayLeft(DateLeft::GetDayCurrentDate(), expiry_date) * ptr_day_time_left_->GetTotalTime() +
+            left_time_ = ptr_day_date_left_->GetDayLeft(DateLeft::GetDayCurrentDate(), expiry_date) * ptr_day_time_left_->GetTotalTimeOneDay() +
                          ptr_night_date_left_->GetDayLeft(DateLeft::GetNightCurrentDate(), expiry_date) * ptr_night_time_left_->GetTimeLeft();
-            total_time_ = day_num_in_year * ptr_day_time_left_->GetTotalTime() + night_num_in_year * ptr_night_time_left_->GetTimeLeft();
+            total_time_one_year_ = day_num_in_year * ptr_day_time_left_->GetTotalTimeOneDay() + night_num_in_year * ptr_night_time_left_->GetTimeLeft();
         }
 
     public:
         auto GetTimeLeft() {
             const auto time_left = get_time_left();
             return time_left < 1e-6 ? 1e-6 : time_left;
+        }
+
+        auto GetTotalTimeOneDay() {
+            return ptr_day_time_left_->GetTotalTimeOneDay() + ptr_night_time_left_->GetTotalTimeOneDay();
         }
     };
 }// namespace commodity_option

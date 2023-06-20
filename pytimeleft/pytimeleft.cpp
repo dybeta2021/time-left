@@ -26,7 +26,8 @@ PYBIND11_MODULE(pytimeleft, m) {
                  py::arg("pm_start"),
                  py::arg("pm_end"),
                  py::arg("expiry_date"))
-            .def("GetTimeLeft", &stock_option::TimeLeft::GetTimeLeft);
+            .def("GetTimeLeft", &stock_option::TimeLeft::GetTimeLeft)
+            .def("GetTotalTimeOneDay", &stock_option::TimeLeft::GetTotalTimeOneDay);
 
     py::class_<commodity_option::TimeLeft>(m, "CommodityOptionTimeLeft")
             .def(py::init<const std::vector<std::string> &,
@@ -55,5 +56,6 @@ PYBIND11_MODULE(pytimeleft, m) {
                  py::arg("night_start"),
                  py::arg("night_end"),
                  py::arg("expiry_date"))
-            .def("GetTimeLeft", &commodity_option::TimeLeft::GetTimeLeft);
+            .def("GetTimeLeft", &commodity_option::TimeLeft::GetTimeLeft)
+            .def("GetTotalTimeOneDay", &commodity_option::TimeLeft::GetTotalTimeOneDay);
 }
