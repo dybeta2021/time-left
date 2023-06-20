@@ -3,9 +3,9 @@
 //
 #pragma warning(disable : 4996)
 #include "commodity_option.h"
-#include "stock_option.h"
 #include "pybind11/pybind11.h"
 #include "pybind11/stl.h"
+#include "stock_option.h"
 
 namespace py = pybind11;
 
