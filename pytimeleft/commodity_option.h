@@ -299,6 +299,20 @@ namespace commodity_option {
         bool is_day_{};
         bool is_holiday_{};
 
+
+        /// 返回单位年
+        double get_time_left() {
+            if (is_holiday_) {
+                return (double) left_time_ / (double) total_time_;
+            }
+
+            if (is_day_) {
+                return (ptr_day_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_;
+            } else {
+                return (ptr_night_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_;
+            }
+        }
+
     public:
         TimeLeft(const std::vector<std::string> &day_cal_dates,
                  const std::vector<std::string> &night_cal_dates,
@@ -344,18 +358,9 @@ namespace commodity_option {
         }
 
     public:
-        /// 返回单位年
-        /// \return
-        double GetTimeLeft() {
-            if (is_holiday_) {
-                return (double) left_time_ / (double) total_time_;
-            }
-
-            if (is_day_) {
-                return (ptr_day_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_;
-            } else {
-                return (ptr_night_time_left_->GetTimeLeft() + (double) left_time_) / (double) total_time_;
-            }
+        auto GetTimeLeft() {
+            const auto time_left = get_time_left();
+            return time_left < 1e-6 ? 1e-6 : time_left;
         }
     };
 }// namespace commodity_option
