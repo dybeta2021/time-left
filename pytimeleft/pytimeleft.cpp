@@ -57,5 +57,7 @@ PYBIND11_MODULE(pytimeleft, m) {
                  py::arg("night_end"),
                  py::arg("expiry_date"))
             .def("GetTimeLeft", &commodity_option::TimeLeft::GetTimeLeft)
-            .def("GetTotalTimeOneDay", &commodity_option::TimeLeft::GetTotalTimeOneDay);
+            .def("GetTotalTimeOneDay", &commodity_option::TimeLeft::GetTotalTimeOneDay)
+            .def("GetDayTimeOneDay", &commodity_option::TimeLeft::GetDayTimeOneDay)
+            .def("GetNightTimeOneDay", &commodity_option::TimeLeft::GetNightTimeOneDay);
 }

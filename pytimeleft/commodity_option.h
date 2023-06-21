@@ -365,5 +365,13 @@ namespace commodity_option {
         auto GetTotalTimeOneDay() {
             return ptr_day_time_left_->GetTotalTimeOneDay() + ptr_night_time_left_->GetTotalTimeOneDay();
         }
+
+        auto GetDayTimeOneDay() {
+            return ptr_day_time_left_->GetTotalTimeOneDay();
+        }
+
+        auto GetNightTimeOneDay() {
+            return ptr_night_time_left_->GetTotalTimeOneDay();
+        }
     };
 }// namespace commodity_option
