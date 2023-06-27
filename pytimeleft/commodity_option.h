@@ -297,7 +297,7 @@ namespace commodity_option {
         long total_time_one_year_{};
         bool is_day_{};
         bool is_holiday_{};
-
+        double one_day_time_{};
 
         /// 返回单位年
         double get_time_left() {
@@ -354,6 +354,8 @@ namespace commodity_option {
             left_time_ = ptr_day_date_left_->GetDayLeft(DateLeft::GetDayCurrentDate(), expiry_date) * ptr_day_time_left_->GetTotalTimeOneDay() +
                          ptr_night_date_left_->GetDayLeft(DateLeft::GetNightCurrentDate(), expiry_date) * ptr_night_time_left_->GetTimeLeft();
             total_time_one_year_ = day_num_in_year * ptr_day_time_left_->GetTotalTimeOneDay() + night_num_in_year * ptr_night_time_left_->GetTimeLeft();
+
+            one_day_time_ = (ptr_day_time_left_->GetTotalTimeOneDay() + ptr_night_time_left_->GetTotalTimeOneDay()) / total_time_one_year_;
         }
 
     public:
@@ -363,7 +365,7 @@ namespace commodity_option {
         }
 
         auto GetTotalTimeOneDay() {
-            return ptr_day_time_left_->GetTotalTimeOneDay() + ptr_night_time_left_->GetTotalTimeOneDay();
+            return one_day_time_;
         }
 
         auto GetDayTimeOneDay() {

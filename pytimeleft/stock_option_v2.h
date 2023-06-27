@@ -199,6 +199,7 @@ namespace stock_option_v2 {
         double date_left_{};
         int date_num_in_year_{};
         bool is_holiday_{};
+        double one_day_time_{};
 
         /// 返回单位年
         auto get_time_left() {
@@ -231,10 +232,12 @@ namespace stock_option_v2 {
             } else {
                 is_holiday_ = true;
             }
+
+            one_day_time_ = 1. / date_num_in_year;
         }
 
         auto GetTotalTimeOneDay() {
-            return ptr_datetime_left_->GetTotalTimeOneDay();
+            return one_day_time_;
         }
 
         auto GetTimeLeft() {
@@ -242,4 +245,4 @@ namespace stock_option_v2 {
             return time_left < 1e-6 ? 1e-6 : time_left;
         }
     };
-}// namespace stock_option
+}// namespace stock_option_v2
