@@ -355,7 +355,7 @@ namespace commodity_option {
                          ptr_night_date_left_->GetDayLeft(DateLeft::GetNightCurrentDate(), expiry_date) * ptr_night_time_left_->GetTimeLeft();
             total_time_one_year_ = day_num_in_year * ptr_day_time_left_->GetTotalTimeOneDay() + night_num_in_year * ptr_night_time_left_->GetTimeLeft();
 
-            one_day_time_ = (ptr_day_time_left_->GetTotalTimeOneDay() + ptr_night_time_left_->GetTotalTimeOneDay()) / total_time_one_year_;
+            one_day_time_ = (double)(ptr_day_time_left_->GetTotalTimeOneDay() + ptr_night_time_left_->GetTotalTimeOneDay()) / (double)total_time_one_year_;
         }
 
     public:

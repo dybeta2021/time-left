@@ -171,4 +171,4 @@ if __name__ == "__main__":
     time_table = read_excel_file()
     for config in time_table.to_dict(orient="records"):
         print(config)
-        print(TimeLeft(config=config, expiry_date="2023-06-21").get_time_left())
+        print(TimeLeft(config=config, expiry_date="2023-06-27").get_time_left())
